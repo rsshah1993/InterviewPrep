@@ -65,6 +65,41 @@ def breadth_first_search(tree: Optional[TreeNode]):
     return visited
 
 
+# from leetcode:
+def isValidBST(root: Optional[TreeNode]) -> bool:
+    """
+    Check for valid binary search tree. In this case
+    a valid tree is when all nodes on a left branch are less than the
+    node value, and all nodes on a right branch are greater than the node 
+    value.
+
+    We keep track of this by specifying a range that the a node must fall within.
+    If we take a left branch, values must be less than the current node value
+    so we specify that as the upper range. Similarly for a right branch where
+    we set the minimum of the range to the current nodes value.
+    """
+    def validate(node: TreeNode, greater_than: float, less_than: float) -> bool:
+        if node is None:
+            return True
+
+        elif greater_than < node.data < less_than:
+            left = validate(node.left, less_than=node.data,
+                            greater_than=greater_than)
+            # don't have to validate the entire tree if
+            # left branch is invalid
+            if not left:
+                return left
+
+            right = validate(node.right, less_than=less_than,
+                             greater_than=node.data)
+            return right
+
+        else:
+            return False
+
+    return validate(root, greater_than=float("-inf"), less_than=float("inf"))
+
+
 if __name__ == "__main__":
     graph = {
         0: [1, 2],
