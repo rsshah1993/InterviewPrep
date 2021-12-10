@@ -50,14 +50,19 @@ def depth_first_search(tree: Optional[TreeNode], acc=list()):
     return acc
 
 
-def breadth_first_search(tree: Optional[TreeNode], acc=list()):
-    # TODO: Incomplete
-    if tree is None:
-        return acc
-    if len(acc) == 0:
-        acc.append(tree.data)
-    acc.append(tree.left.data)
-    acc.append(tree.right.data)
+def breadth_first_search(tree: Optional[TreeNode]):
+    visited = list()
+    queue = list()
+    queue.append(tree)
+    while queue:
+        m = queue.pop(0)
+        if m.left is not None:
+            queue.append(m.left)
+        if m.right is not None:
+            queue.append(m.right)
+        visited.append(m.data)
+
+    return visited
 
 
 if __name__ == "__main__":
@@ -65,6 +70,9 @@ if __name__ == "__main__":
         0: [1, 2],
         1: [3, 4],
         2: [5, 6],
+        6: [7, 9],
+        5: [8, 10]
     }
     tree = construct_tree(graph=graph, tree=TreeNode(), cur_node=0)
     print(depth_first_search(tree=tree))
+    print(breadth_first_search(tree=tree))
