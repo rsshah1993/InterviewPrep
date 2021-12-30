@@ -14,7 +14,7 @@ Trees: Special case of graph where there is only one path between any two vertic
             returning to the same vertex.
 
 """
-from typing import Optional
+from typing import Optional, List
 
 
 class TreeNode:
@@ -65,6 +65,17 @@ def breadth_first_search(tree: Optional[TreeNode]):
     return visited
 
 
+def in_order_traversal(tree: Optional[TreeNode], acc: List[int] = list()) -> List[int]:
+    if tree is None:
+        return acc
+
+    acc = in_order_traversal(tree.left, acc=acc)
+    acc.append(tree.data)
+    acc = in_order_traversal(tree.right, acc=acc)
+
+    return acc
+
+
 # from leetcode:
 def isValidBST(root: Optional[TreeNode]) -> bool:
     """
@@ -100,6 +111,19 @@ def isValidBST(root: Optional[TreeNode]) -> bool:
     return validate(root, greater_than=float("-inf"), less_than=float("inf"))
 
 
+def invertTree(root: Optional[TreeNode]) -> Optional[TreeNode]:
+    """Inverting binary search tree """
+    if root is None:
+        return
+
+    left = invertTree(root=root.right)
+    right = invertTree(root=root.left)
+    root.left = left
+    root.right = right
+
+    return root
+
+
 if __name__ == "__main__":
     graph = {
         0: [1, 2],
@@ -111,3 +135,4 @@ if __name__ == "__main__":
     tree = construct_tree(graph=graph, tree=TreeNode(), cur_node=0)
     print(depth_first_search(tree=tree))
     print(breadth_first_search(tree=tree))
+    print(in_order_traversal(tree=tree))
