@@ -49,3 +49,9 @@
         data = [1, 2, 3, 4, 5, 6, 7, 8, 9]
         print(binary_search(data, 8))
         ```
+- Quasilinear Time - O(n log n)
+    - Where each element of the input data takes log time to process
+    - Example: mergesort, timesort, heapsort
+- Quadratic Time - O(n^2)
+    - Each element requires a linear time operation
+    - Example - nested for-loops
