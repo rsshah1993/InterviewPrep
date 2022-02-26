@@ -1,16 +1,16 @@
 """
 Tree and graph traversal
 
-Graphs: Graphs are a class of abstract data types that model the relationships between data. 
-Formally, a graph G = (V, E) consists of a set of vertices V and a set of edges E. Graphs 
-can model real-world artifacts like maps by representing intersections or places as vertices 
-and the roads connecting places as edges, where a graph problem might be to return the 
+Graphs: Graphs are a class of abstract data types that model the relationships between data.
+Formally, a graph G = (V, E) consists of a set of vertices V and a set of edges E. Graphs
+can model real-world artifacts like maps by representing intersections or places as vertices
+and the roads connecting places as edges, where a graph problem might be to return the
 shortest path between two places.
 
 Trees: Special case of graph where there is only one path between any two vertices.
     Satisfies:
         connectivity - every vertex can reach every other vertex
-        acyclic - No cycles; no sequence of unique edges starting at a vertex and 
+        acyclic - No cycles; no sequence of unique edges starting at a vertex and
             returning to the same vertex.
 
 """
@@ -75,13 +75,20 @@ def in_order_traversal(tree: Optional[TreeNode], acc: List[int] = list()) -> Lis
 
     return acc
 
+def post_order_traversal(tree: Optional[TreeNode], acc: List[int] = list()) -> List[int]:
+    if tree is None:
+        return acc
+    acc = post_order_traversal(tree.left, acc=acc)
+    acc = post_order_traversal(tree.right, acc=acc)
+    acc.append(tree.data)
+    return acc
 
 # from leetcode:
 def isValidBST(root: Optional[TreeNode]) -> bool:
     """
     Check for valid binary search tree. In this case
     a valid tree is when all nodes on a left branch are less than the
-    node value, and all nodes on a right branch are greater than the node 
+    node value, and all nodes on a right branch are greater than the node
     value.
 
     We keep track of this by specifying a range that the a node must fall within.
@@ -129,10 +136,11 @@ if __name__ == "__main__":
         0: [1, 2],
         1: [3, 4],
         2: [5, 6],
-        6: [7, 9],
-        5: [8, 10]
+        6: [9, 10],
+        5: [7, 8]
     }
     tree = construct_tree(graph=graph, tree=TreeNode(), cur_node=0)
-    print(depth_first_search(tree=tree))
-    print(breadth_first_search(tree=tree))
-    print(in_order_traversal(tree=tree))
+    print("DFS: ", depth_first_search(tree=tree))
+    print("BFS: ", breadth_first_search(tree=tree))
+    print("In Order: ", in_order_traversal(tree=tree))
+    print("Post Order: ", post_order_traversal(tree=tree))
