@@ -19,5 +19,3 @@ while i < 10:
             break
     else:
         print("FOOBAR")
-    print(i)
-    i += 1
