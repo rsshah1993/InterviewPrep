@@ -6,8 +6,6 @@ class KMeans:
         self.n_clusters = n_clusters
 
     def fit(self, X: np.ndarray) -> None:
-        X = np.array(X)
-
         # 1. initialize centroids
         self.centroids = self.init_centroids(X)
 
@@ -25,7 +23,7 @@ class KMeans:
     def update_centroids(self, X: np.ndarray, labels: np.ndarray) -> np.ndarray:
         new_centroids = np.zeros((self.n_clusters, X.shape[1]))
         for k in range(self.n_clusters):
-            new_centroids[k] = np.mean(X[np.where(labels == k)], axis = 0)
+            new_centroids[k] = np.mean(X[np.where(labels == k)], axis=0)
         return new_centroids
 
     def init_centroids(self, X):
@@ -46,8 +44,8 @@ if __name__ == "__main__":
 
     X, y = make_blobs(centers=4, n_samples=1000)
 
-    fig = plt.figure(figsize=(8,6))
-    plt.scatter(X[:,0], X[:,1], c=y)
+    fig = plt.figure(figsize=(8, 6))
+    plt.scatter(X[:, 0], X[:, 1], c=y)
     plt.title("Dataset with 4 clusters")
     plt.xlabel("First feature")
     plt.ylabel("Second feature")
@@ -56,8 +54,8 @@ if __name__ == "__main__":
     kmeans = KMeans(n_clusters=4)
     kmeans.fit(X)
 
-    plt.figure(figsize=(12,10))
+    plt.figure(figsize=(12, 10))
     plt.title("Centroids")
     plt.scatter(X[:, 0], X[:, 1], marker='.', c=y)
-    plt.scatter(kmeans.centroids[:, 0], kmeans.centroids[:,1], c='r')
+    plt.scatter(kmeans.centroids[:, 0], kmeans.centroids[:, 1], c='r')
     plt.show()
